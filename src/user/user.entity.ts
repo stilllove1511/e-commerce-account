@@ -4,14 +4,12 @@ import {
     PrimaryGeneratedColumn,
     OneToMany,
     ManyToOne,
+    PrimaryColumn,
 } from 'typeorm'
 
 @Entity()
 export class Role {
-    @PrimaryGeneratedColumn()
-    id: number
-
-    @Column()
+    @PrimaryColumn()
     code: string
 
     @Column()
