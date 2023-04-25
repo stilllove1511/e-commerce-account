@@ -5,6 +5,7 @@ import {
     OneToMany,
     ManyToOne,
     PrimaryColumn,
+    Unique,
 } from 'typeorm'
 
 @Entity()
@@ -25,6 +26,7 @@ export class User {
     id: number
 
     @Column()
+    @Unique(['username'])
     username: string
 
     @Column()
