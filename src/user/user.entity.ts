@@ -2,10 +2,10 @@ import {
     Entity,
     Column,
     PrimaryGeneratedColumn,
-    OneToMany,
-    ManyToOne,
     PrimaryColumn,
     Unique,
+    ManyToMany,
+    JoinTable,
 } from 'typeorm'
 
 @Entity()
@@ -16,7 +16,8 @@ export class Role {
     @Column()
     name: string
 
-    @OneToMany(() => User, (user) => user.role)
+    @ManyToMany(() => User, (user) => user.roles)
+    @JoinTable({ name: 'role_user' })
     users: User[]
 }
 
@@ -32,6 +33,6 @@ export class User {
     @Column()
     password: string
 
-    @ManyToOne(() => Role, (role) => role.users)
-    role: Role
+    @ManyToMany(() => Role, (role) => role.users)
+    roles: Role[]
 }

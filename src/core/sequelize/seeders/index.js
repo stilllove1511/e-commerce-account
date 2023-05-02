@@ -32,13 +32,26 @@ module.exports = {
                     username: 'admin',
                     password:
                         '$2b$10$ngaVbYcTPLzfGKlwGgvv6.C0eLvoc1CcgWPiK.RLXqcpRStU4lFQi', //mylove
-                    roleCode: 'admin',
                 },
                 {
                     username: 'customer',
                     password:
                         '$2b$10$ngaVbYcTPLzfGKlwGgvv6.C0eLvoc1CcgWPiK.RLXqcpRStU4lFQi', //mylove
+                },
+            ],
+            {},
+        )
+
+        await queryInterface.bulkInsert(
+            'role_user',
+            [
+                {
+                    roleCode: 'admin',
+                    userId: 1,
+                },
+                {
                     roleCode: 'customer',
+                    userId: 2,
                 },
             ],
             {},

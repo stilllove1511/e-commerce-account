@@ -11,4 +11,9 @@ export class AuthController {
     async login(data) {
         return this.authService.login(data)
     }
+
+    @MessagePattern('login_admin')
+    async loginAdmin(data) {
+        return this.authService.loginAdmin(data)
+    }
 }

@@ -27,16 +27,61 @@ export class AuthService {
         password: string
     }) {
         const user = await this.validateUser(username, password)
-        const payload = {
-            id: user.id,
-            username: user.username,
-            role: user.role,
+        if (user) {
+            const payload = {
+                id: user.id,
+                username: user.username,
+                roles: user.roles,
+            }
+            let access_token = this.jwtService.sign(payload)
+            console.log(`access_token: ${access_token}`)
+            return {
+                code: 0,
+                data: {
+                    token: access_token,
+                    userId: user.id,
+                    roles: user.roles,
+                },
+            }
+        } else {
+            return {
+                code: 1,
+                message: 'Information is not correct',
+            }
         }
-        let access_token = this.jwtService.sign(payload)
-        console.log(`access_token: ${access_token}`)
+    }
+    async loginAdmin({
+        username,
+        password,
+    }: {
+        username: string
+        password: string
+    }) {
+        const user = await this.validateUser(username, password)
+        if (user) {
+            for(let role of user.roles){
+                if(role.code=='admin') {
+                    const payload = {
+                        id: user.id,
+                        username: user.username,
+                        roles: user.roles,
+                    }
+                    let access_token = this.jwtService.sign(payload)
+                    console.log(`access_token: ${access_token}`)
+                    return {
+                        code: 0,
+                        data: {
+                            token: access_token,
+                            userId: user.id,
+                            roles: user.roles,
+                        },
+                    }
+                }
+            }
+        }
         return {
-            code: 0,
-            access_token,
+            code: 1,
+            message: 'Information is not correct',
         }
     }
 }
