@@ -1,6 +1,5 @@
-import { Controller } from '@nestjs/common'
+import { Body, Controller, Post } from '@nestjs/common'
 import { AccountService } from './account.service'
-import { MessagePattern } from '@nestjs/microservices'
 import { UserService } from 'src/user/user.service'
 import * as jwt from 'jsonwebtoken'
 
@@ -11,8 +10,8 @@ export class AccountController {
         private readonly userService: UserService,
     ) {}
 
-    @MessagePattern('register')
-    async register(payload) {
+    @Post('register')
+    async register(@Body() payload) {
         try {
             return await this.accountService.register(payload)
         } catch (error) {
@@ -24,8 +23,8 @@ export class AccountController {
         }
     }
 
-    @MessagePattern('updatePassword')
-    async changePassword(payload) {
+    @Post('updatePassword')
+    async changePassword(@Body() payload) {
         try {
             return await this.accountService.changePassword(payload)
         } catch (error) {
@@ -37,8 +36,8 @@ export class AccountController {
         }
     }
 
-    @MessagePattern('detailAdmin')
-    async detailAdmin(payload) {
+    @Post('detailAdmin')
+    async detailAdmin(@Body() payload) {
         const user = jwt.decode(payload.token) as any
         const userId = user.id
         try {

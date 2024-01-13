@@ -1,19 +1,17 @@
-import { Controller, Request, UseGuards } from '@nestjs/common'
+import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common'
 import { AuthService } from 'src/auth/auth.service'
-import { LocalAuthGuard } from 'src/auth/local-auth.guard'
-import { MessagePattern } from '@nestjs/microservices'
 
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) {}
 
-    @MessagePattern('login')
-    async login(data) {
+    @Post('login')
+    async login(@Body() data) {
         return this.authService.login(data)
     }
 
-    @MessagePattern('login_admin')
-    async loginAdmin(data) {
+    @Post('login_admin')
+    async loginAdmin(@Body() data) {
         return this.authService.loginAdmin(data)
     }
 }
